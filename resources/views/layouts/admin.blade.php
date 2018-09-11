@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/fontawesome-all.css')}}">
     <link rel="stylesheet" href="{{asset('/css/template/bootadmin.css')}}">
+    <link rel="stylesheet" href="{{mix('css/semantic.css')}}">
 
-    <title>BootAdmin</title>
+    <title>MR Techno</title>
 </head>
 <body class="bg-light">
 
 <nav class="navbar navbar-expand navbar-dark bg-primary">
     <a class="sidebar-toggle mr-3" href="#"><i class="fa fa-bars"></i></a>
-    <a class="navbar-brand" href="#">BootAdmin</a>
+    <a class="navbar-brand" href="#">MR Techno</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
@@ -35,35 +36,33 @@
 <div class="d-flex">
     <div class="sidebar sidebar-dark bg-dark">
         <ul class="list-unstyled">
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Menu Item</a></li>
+            <li><a href="/admin/inicio"><i class="fas fa-chart-line"></i> Menu Item</a></li>
             <li>
                 <a href="#sm_expand_1" data-toggle="collapse">
-                    <i class="fa fa-fw fa-link"></i> Expandable Menu Item
+                    <i class="fas fa-archive"></i> Gestionar stock
                 </a>
                 <ul id="sm_expand_1" class="list-unstyled collapse">
-                    <li><a href="#">Submenu Item</a></li>
+                    <li><a href="/admin/stock">Alta</a></li>
                     <li><a href="#">Submenu Item</a></li>
                 </ul>
             </li>
+            <li><a href="/admin/productos"><i class="fas fa-hdd"></i> Menu Item</a></li>
             <li><a href="#"><i class="fa fa-fw fa-link"></i> Menu Item</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Menu Item</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Menu Item</a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i> Menu Item</a></li>
         </ul>
     </div>
 
     <div class="content p-4">
 
-        <div class="card mb-4">
+        <div class="card mb-4" id="app">
             @yield('main-content')
-            <!--<div class="card-body">
-                This is a blank page you can use as a starting point.
-            </div>-->
         </div>
     </div>
 </div>
 
 <script src="{{mix('js/app.js')}}"></script>
 <script src="/js/bootadmin.js"></script>
+<script src="{{mix('/js/semantic.js')}}"></script>
 
 </body>
 </html>

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.admin');
+    return view('stock.stock');
 });
 
 Route::get('/admin/inicio', ['uses' => 'InicioController@Index']);

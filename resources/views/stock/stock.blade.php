@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('main-content')
-        <div class="card">
             <div class="card-header" style="background: #222d32   ; color: #FFFFFF;  opacity: 0.9;">
                 <div class="row">
                     <div class="col-md-4" style="float: left;">
@@ -30,13 +29,11 @@
                     <input class="btn btn btn-success" tabindex="1" type="submit" value="Cargar">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </form>    
-                <vuetablestock></vuetablestock>
-                    
-                
-            <div class="panel-footer">
+                <vuetablestock style="width: 100%"></vuetablestock>     
+                <div class="panel-footer">
 
+                </div>
             </div>
-        </div>
 <div class="modal fade" id="delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">

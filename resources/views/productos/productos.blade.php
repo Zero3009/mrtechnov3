@@ -1,9 +1,6 @@
 @extends('layouts.admin')
 @section('main-content')
-<div class="row">
-    <div class="col-md-12" >
-        <div class="panel panel-default">
-            <div class="panel-heading" style="background: #222d32   ; color: #FFFFFF;  opacity: 0.9;">
+            <div class="card-header" style="background: #222d32   ; color: #FFFFFF;  opacity: 0.9;">
                 <div class="row">
                     <div class="col-md-4" style="float: left;">
                         <h3 class="panel-title" style="margin-top: 10px;">Gestionar productos</h3>
@@ -15,25 +12,12 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body" style="background: #D7D7D7">
-                <productos></productos>
-                <!--<table class="table table-striped table-bordered tabla-filtro" width="100%" id="tabla">
-                    <thead>
-                        <tr>
-                            <th>Tipo</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Código de barras</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                </table>-->
+            <div class="card-body" style="background: #D7D7D7">
+                <productos style="width: 100%"></productos>
             </div>
             <div class="panel-footer">
             </div>
-        </div>
-    </div>
-</div>
+
 <div class="modal fade" id="delete" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
