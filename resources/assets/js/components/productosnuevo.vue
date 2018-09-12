@@ -49,7 +49,6 @@
             <template v-if='tipo != null && marca != null && modelo != "" && codbarras != ""'>
                 <input class="btn btn btn-success" tabindex="1" type="submit" value="Crear producto">
             </template>
-            <input type="hidden" name="_token" :value="csrf">
         </div>
     </form>
 </template>

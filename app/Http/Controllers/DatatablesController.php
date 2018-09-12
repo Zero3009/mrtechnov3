@@ -39,15 +39,16 @@ class DatatablesController extends Controller
 						->paginate(10);
 		return $retornar;
 	}
-	public function getStock(Request $request)
+	public function getStock()
 	{
-		$ordenar = explode('|', $request->sort);
+		//$ordenar = explode('|', $request->sort);
 		$retornar = Stock::select(['stock.id','prods.codbarras','prods.marca','prods.modelo','stock.serial','stock.fechaEntrada','stock.fechaSalida','stock.precioEntrada','stock.precioSalida','provs.nombre'])
 							->join('prods','stock.prods_id','=','prods.id')
 							->join('provs','stock.provs_id','=','provs.id')
 							->where('stock.estado','=',true)
-							->orderBy("$ordenar[0]", "$ordenar[1]")
-							->paginate(15);
+							->get();
+		//					->orderBy("$ordenar[0]", "$ordenar[1]")
+		//					->paginate(15);
 		return Response::json($retornar);
 		/*$datatables = app('datatables')
 						->of($retornar)->addColumn('action', function($retornar){

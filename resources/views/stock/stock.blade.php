@@ -21,14 +21,15 @@
                     @endforeach
                     </div>
                 @endif 
-                
-                <form method="POST" action="/admin/stock/nuevo/post" accept-charset="UTF-8" class="form-horizontal">
-                    @verbatim
-                    <stock></stock>
-                    @endverbatim
-                    <input class="btn btn btn-success" tabindex="1" type="submit" value="Cargar">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                </form>    
+                <div class="border border-primary">
+                    <form method="POST" action="/admin/stock/nuevo/post" accept-charset="UTF-8" class="form-horizontal">
+                        @verbatim
+                        <stock></stock>
+                        @endverbatim
+                        <input class="btn btn btn-success" tabindex="1" type="submit" value="Cargar" style="margin-bottom: 10px; margin-left: 10px">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    </form>
+                </div>
                 <vuetablestock style="width: 100%"></vuetablestock>     
                 <div class="panel-footer">
 

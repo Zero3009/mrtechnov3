@@ -69,6 +69,7 @@
             }
             var datas=
             {
+                csrf: $('meta[name=csrf-token]').attr('content'),
                 state: state.date,
                 selected: null,
                 tag: null,
@@ -121,7 +122,6 @@
                         response.data.forEach(function(item){
                             a.push(item.label);
                         });   
-                        console.log(a);
                         this.seriales = a;
                 })
             },
