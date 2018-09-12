@@ -69,7 +69,6 @@
             }
             var datas=
             {
-                csrf: $('meta[name=csrf-token]').attr('content'),
                 state: state.date,
                 selected: null,
                 tag: null,
