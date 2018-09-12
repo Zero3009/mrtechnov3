@@ -84888,8 +84888,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    var datas = {
+      csrf: $('meta[name=csrf-token]').attr('content'),
+      fordelete: null
+    };
+    return datas;
+  },
   props: {
     rowData: {
       type: Object,
@@ -84903,6 +84924,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     itemAction: function itemAction(action, data, index) {
       console.log('custom-actions: ' + action, data.id, index);
       this.$refs.modal1.show();
+      this.fordelete = data.id;
     }
   }
 });
@@ -84961,7 +84983,96 @@ var render = function() {
       _c(
         "b-modal",
         { ref: "modal1", attrs: { id: "modal1", title: "Bootstrap-Vue" } },
-        [_c("p", { staticClass: "my-4" }, [_vm._v("Hello from modal!")])]
+        [
+          _c(
+            "form",
+            {
+              staticClass: "form-horizontal",
+              attrs: {
+                method: "POST",
+                action: "/admin/stock/eliminar",
+                "accept-charset": "UTF-8"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-header",
+                  staticStyle: {
+                    background: "#222d32",
+                    color: "#FFFFFF",
+                    opacity: "0.9"
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-hidden": "true"
+                      }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h4",
+                    { staticClass: "modal-title", attrs: { id: "titulo" } },
+                    [_vm._v(" Deshabilitar area")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("p", { staticClass: "help-block" }, [
+                  _vm._v(
+                    "¿Esta seguro que desea eliminar este registro de stock?"
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fordelete,
+                      expression: "fordelete"
+                    }
+                  ],
+                  staticClass: "id",
+                  attrs: { type: "hidden", name: "id" },
+                  domProps: { value: _vm.fordelete },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.fordelete = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "submit", value: "Eliminar" }
+                })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("p", { staticClass: "my-4" }, [_vm._v("Hello from modal!")])
+        ]
       )
     ],
     1
