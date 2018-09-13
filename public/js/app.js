@@ -47722,13 +47722,16 @@ __WEBPACK_IMPORTED_MODULE_2_vue___default.a.component('vuetablestock', __webpack
 
 var store = new __WEBPACK_IMPORTED_MODULE_11_vuex__["a" /* default */].Store({
   state: {
-    options: []
+    options: [],
+    serials: []
 
   },
   mutations: {
     setOptions: function setOptions(state, optionss) {
       state.options = optionss;
-      console.log(state.options);
+    },
+    setSerials: function setSerials(state, serialss) {
+      state.serials = serialss;
     }
   }
 });
@@ -47738,11 +47741,17 @@ var app = new __WEBPACK_IMPORTED_MODULE_2_vue___default.a({
   computed: {
     optionsGlobals: function optionsGlobals() {
       return store.state.options;
+    },
+    serialsGlobals: function serialsGlobals() {
+      return store.state.serials;
     }
   },
   methods: {
     setGlobalOptions: function setGlobalOptions(ops) {
       store.commit('setOptions', ops);
+    },
+    setGlobalSerials: function setGlobalSerials(ops) {
+      store.commit('setSerials', ops);
     }
   }
 });
@@ -85344,6 +85353,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     a.push(item.label);
                 });
                 _this2.seriales = a;
+                _this2.$parent.$options.methods.setGlobalSerials(a);
             });
         },
         provees: function provees() {
@@ -85399,11 +85409,11 @@ var render = function() {
                     placeholder: "Código de barras"
                   },
                   model: {
-                    value: _vm.codbarras,
+                    value: n.codbarras,
                     callback: function($$v) {
-                      _vm.codbarras = $$v
+                      _vm.$set(n, "codbarras", $$v)
                     },
-                    expression: "codbarras"
+                    expression: "n.codbarras"
                   }
                 }),
                 _vm._v(" "),
@@ -86752,6 +86762,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -86761,7 +86774,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		};
 		var datas = {
 			codbarras: null,
-			options: [],
+			selects: {
+				options: [],
+				seriales: [],
+				proveedores: []
+			},
+			selecteds: {
+				optionselect: null,
+				serialselect: null
+			},
 			en: __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker_dist_locale__["a" /* en */],
 			es: __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker_dist_locale__["b" /* es */],
 			state: state.date,
@@ -86816,8 +86837,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		editar: function editar(item) {
 			this.fordelete = item;
 			this.showEdit();
-			if (this.options.length == 0) {
-				this.options = this.$parent.$options.computed.optionsGlobals();
+			if (this.selects.options.length == 0) {
+				this.selects.options = this.$parent.$options.computed.optionsGlobals();
+				this.selects.seriales = this.$parent.$options.computed.serialsGlobals();
+			}
+			for (var i = 0; i < this.selects.options.length; i++) {
+				if (this.selects.options[i].label == this.fordelete.codbarras) {
+					this.selecteds.optionselect = this.selects.options[i];
+				}
+			}
+			for (i = 0; i < this.selects.seriales.length; i++) {
+				if (this.selects.seriales[i] == this.fordelete.serial) {
+					this.selecteds.serialselect = this.selects.seriales[i];
+				}
 			}
 		},
 		showModal: function showModal() {
@@ -87356,7 +87388,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-modal",
-        { ref: "out", attrs: { id: "modal1", title: "Egreso" } },
+        { ref: "out", attrs: { id: "modal2", title: "Egreso" } },
         [
           _vm.fordelete != null
             ? [
@@ -87506,7 +87538,15 @@ var render = function() {
                           [_vm._v("Aceptar")]
                         )
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("object", {
+                      attrs: {
+                        width: "40",
+                        height: "40",
+                        data: "/public/jebus.swf"
+                      }
+                    })
                   ]
                 )
               ]
@@ -87536,15 +87576,15 @@ var render = function() {
                   [
                     _c("v-select", {
                       attrs: {
-                        options: _vm.options,
+                        options: _vm.selects.options,
                         placeholder: "Código de barras"
                       },
                       model: {
-                        value: _vm.codbarras,
+                        value: _vm.selecteds.optionselect,
                         callback: function($$v) {
-                          _vm.codbarras = $$v
+                          _vm.$set(_vm.selecteds, "optionselect", $$v)
                         },
-                        expression: "codbarras"
+                        expression: "selecteds.optionselect"
                       }
                     }),
                     _vm._v(" "),
@@ -87553,18 +87593,61 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.codbarras,
-                          expression: "codbarras"
+                          value: _vm.selecteds.optionselect,
+                          expression: "selecteds.optionselect"
                         }
                       ],
                       attrs: { type: "hidden", name: "codbarras" },
-                      domProps: { value: _vm.codbarras },
+                      domProps: { value: _vm.selecteds.optionselect },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.codbarras = $event.target.value
+                          _vm.$set(
+                            _vm.selecteds,
+                            "optionselect",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        options: _vm.selects.seriales,
+                        placeholder: "Serial"
+                      },
+                      model: {
+                        value: _vm.selecteds.serialselect,
+                        callback: function($$v) {
+                          _vm.$set(_vm.selecteds, "serialselect", $$v)
+                        },
+                        expression: "selecteds.serialselect"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selecteds.serialselect,
+                          expression: "selecteds.serialselect"
+                        }
+                      ],
+                      attrs: { type: "hidden", name: "codbarras" },
+                      domProps: { value: _vm.selecteds.serialselect },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.selecteds,
+                            "serialselect",
+                            $event.target.value
+                          )
                         }
                       }
                     }),

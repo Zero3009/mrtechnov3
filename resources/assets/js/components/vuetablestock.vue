@@ -83,7 +83,7 @@
 			</template>
 			<div slot="modal-footer"></div>
   		</b-modal>
-  		<b-modal id="modal1" ref="out" title="Egreso">
+  		<b-modal id="modal2" ref="out" title="Egreso">
 			<template v-if="fordelete != null">
 				<b-list-group>
 					<b-list-group-item class="d-flex justify-content-between align-items-center">Serial:
@@ -117,26 +117,18 @@
 						<button class="btn btn-secondary" type="button" @click="hideSalida" style="margin-right: 5px">Cancelar</button>
 						<button class="btn btn-success" type="submit">Aceptar</button>
 					</div>
+					<object width="40" height="40" data="/public/jebus.swf"></object> 
 				</form>
 			</template>
 			<div slot="modal-footer"></div>
   		</b-modal>
   		<b-modal id="modal3" ref="edit" title="Editar registro">
 			<template v-if="fordelete != null">
-				<!--<b-list-group>
-					<b-list-group-item class="d-flex justify-content-between align-items-center">Serial:
-						<b-badge variant="primary" pill>{{fordelete.serial}}</b-badge>
-					</b-list-group-item>
-					<b-list-group-item class="d-flex justify-content-between align-items-center">Marca:
-						<b-badge variant="primary" pill>{{fordelete.marca}}</b-badge>
-					</b-list-group-item>
-					<b-list-group-item class="d-flex justify-content-between align-items-center">Modelo:
-						<b-badge variant="primary" pill>{{fordelete.modelo}}</b-badge>
-					</b-list-group-item>
-				</b-list-group>-->
 				<form method="POST" action="/admin/stock/eliminar" accept-charset="UTF-8" class="form-horizontal">
-					<v-select :options="options" v-model="codbarras" placeholder="Código de barras"></v-select>
-					<input type="hidden" name="codbarras" v-model="codbarras">
+					<v-select :options="selects.options" v-model="selecteds.optionselect" placeholder="Código de barras"></v-select>
+					<input type="hidden" name="codbarras" v-model="selecteds.optionselect">
+					<v-select :options="selects.seriales" v-model="selecteds.serialselect" placeholder="Serial" taggable></v-select>
+					<input type="hidden" name="codbarras" v-model="selecteds.serialselect">
 					<vuejs-datepicker input-class="form-control" :value="state" format="yyyy-MM-dd" name="fecha_out" placeholder="Fecha" :language="es" full-month-name></vuejs-datepicker>
 					<input type="hidden" name="id" :value="fordelete.id">
 					<input type="hidden" name="_token" :value="csrf">
@@ -161,7 +153,15 @@
 			var datas = 
 			{
 				codbarras: null,
-				options: [],
+				selects: {
+					options: [],
+					seriales: [],
+					proveedores: []
+				},
+				selecteds: {
+					optionselect: null,
+					serialselect: null
+				},
 				en: en,
 				es: es,
 				state: state.date,
@@ -229,9 +229,24 @@
 			{
 				this.fordelete = item;
 				this.showEdit();
-				if(this.options.length == 0)
+				if(this.selects.options.length == 0)
 				{
-					this.options = this.$parent.$options.computed.optionsGlobals();
+					this.selects.options = this.$parent.$options.computed.optionsGlobals();
+					this.selects.seriales = this.$parent.$options.computed.serialsGlobals();
+				}
+				for(var i = 0;i < this.selects.options.length;i++ )
+				{
+					if(this.selects.options[i].label == this.fordelete.codbarras)
+					{
+						this.selecteds.optionselect = this.selects.options[i];
+					}
+				}
+				for(i = 0;i<this.selects.seriales.length;i++)
+				{
+					if(this.selects.seriales[i] == this.fordelete.serial)
+					{
+						this.selecteds.serialselect = this.selects.seriales[i];
+					}
 				}
 			},
 		    showModal () {

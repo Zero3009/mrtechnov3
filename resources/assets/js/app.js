@@ -45,29 +45,41 @@ Vue.component('vuetablestock', require('./components/vuetablestock'));
 const store = new Vuex.Store({
   state: {
     options: [],
+    serials: [],
 
   },
   mutations: {
     setOptions (state, optionss) {
     	state.options = optionss;
-      	console.log(state.options);
+    },
+    setSerials (state, serialss) {
+      state.serials = serialss;
     }
   }
 });
 
 const app = new Vue({
     el: '#app',
-    computed: {
+    computed: 
+    {
     	optionsGlobals()
     	{
     		return store.state.options;
-    	}
+    	},
+      serialsGlobals()
+      {
+        return store.state.serials;
+      }
     },
     methods:
     {
     	setGlobalOptions(ops)
     	{
     		store.commit('setOptions', ops);
-    	}
+    	},
+      setGlobalSerials(ops)
+      {
+        store.commit('setSerials', ops);
+      }
     }
 });

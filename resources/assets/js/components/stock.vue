@@ -15,7 +15,7 @@
             <tr v-bind:id="'row_' + n.id" v-for="n in rowsdynamic">
                 
                 <td style="width:18%">
-                    <v-select :options="options" v-model="codbarras" placeholder="Código de barras"></v-select>
+                    <v-select :options="options" v-model="n.codbarras" placeholder="Código de barras"></v-select>
                     <template v-if="n.codbarras != null">
                         <input type="hidden" name="codbarras[]" v-model="n.codbarras.value">
                     </template>
@@ -123,6 +123,7 @@
                             a.push(item.label);
                         });   
                         this.seriales = a;
+                        this.$parent.$options.methods.setGlobalSerials(a);
                 })
             },
             provees()
