@@ -15,7 +15,7 @@
             <tr v-bind:id="'row_' + n.id" v-for="n in rowsdynamic">
                 
                 <td style="width:18%">
-                    <v-select :options="options" v-model="n.codbarras" placeholder="Código de barras"></v-select>
+                    <v-select :options="options" v-model="codbarras" placeholder="Código de barras"></v-select>
                     <template v-if="n.codbarras != null">
                         <input type="hidden" name="codbarras[]" v-model="n.codbarras.value">
                     </template>
@@ -111,6 +111,7 @@
                 axios.get(this.url2)
                     .then(response => {
                         this.options = response.data;
+                        this.$parent.$options.methods.setGlobalOptions(response.data);
                 });
             },
             serials()
@@ -141,27 +142,7 @@
             {
                 var index = this.rowsdynamic.findIndex(x => x.id==event.currentTarget.id);
                 return Vue.delete(this.rowsdynamic, index);
-            },
-            /*onPaginationData (paginationData) {
-              this.$refs.pagination.setPaginationData(paginationData)
-            },
-            onChangePage (page) {
-              this.$refs.vuetable.changePage(page)
-            },
-            genderLabel (value) {
-              return value === 'M'
-                ? '<span class="ui teal label"><i class="large man icon"></i>Male</span>'
-                : '<span class="ui pink label"><i class="large woman icon"></i>Female</span>'
-            },*/
-            
-            /*formatNumber (value) {
-              return accounting.formatNumber(value, 2)
-            },*/
-            /*formatDate (value, fmt = 'D MMM YYYY') {
-              return (value == null)
-                ? ''
-                : moment(value, 'YYYY-MM-DD').format(fmt)
-            }*/
+            }
         },
         beforeMount()
         {

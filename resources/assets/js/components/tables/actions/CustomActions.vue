@@ -20,6 +20,7 @@
             </form>
     	<p class="my-4">Hello from modal!</p>
   		</b-modal>
+      <b-modal id="modal2" ref="modal2" title="Bootstrap-Vue"
     </div>
     
 </template>

@@ -18,6 +18,8 @@ import vuetable from 'vuetable-2';
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 import moment from 'moment';
 import BootstrapVue from 'bootstrap-vue';
+import 'es6-promise/auto';
+import Vuex from 'vuex';
 
 
 
@@ -40,6 +42,32 @@ Vue.component('productosnuevo', require('./components/productosnuevo.vue'));
 Vue.component('proveedores', require('./components/proveedores'));
 Vue.component('vuetablestock', require('./components/vuetablestock'));
 
+const store = new Vuex.Store({
+  state: {
+    options: [],
+
+  },
+  mutations: {
+    setOptions (state, optionss) {
+    	state.options = optionss;
+      	console.log(state.options);
+    }
+  }
+});
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    computed: {
+    	optionsGlobals()
+    	{
+    		return store.state.options;
+    	}
+    },
+    methods:
+    {
+    	setGlobalOptions(ops)
+    	{
+    		store.commit('setOptions', ops);
+    	}
+    }
 });
