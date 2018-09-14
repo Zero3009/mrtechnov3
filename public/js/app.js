@@ -85965,7 +85965,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			perPage: 5,
 			pageOptions: [5, 10, 15, 25, 50, 100],
 			currentPage: 1,
-			fields: [{ key: 'tipo', label: 'Tipo de producto', sortable: true }, { key: 'codbarras', label: 'Código de barras', sortable: true, sortDirection: 'desc' }, { key: 'marca', label: 'Marca', sortable: true, 'class': 'text-center' }, { key: 'modelo', label: 'Modelo', sortable: true }, { key: 'actions', label: 'Acciones' }]
+			fields: [{ key: 'tipo', label: 'Tipo de producto', sortable: true }, { key: 'codbarras', label: 'Código de barras', sortable: true, sortDirection: 'desc' }, { key: 'marca', label: 'Marca', sortable: true, 'class': 'text-center' }, { key: 'modelo', label: 'Modelo', sortable: true }, { key: 'actions', label: 'Acciones' }],
+			csrf: $('meta[name=csrf-token]').attr('content')
 		};
 		return datas;
 	},
@@ -85997,6 +85998,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		onChangePage: function onChangePage(page) {
 			this.$refs.vuetable.changePage(page);
+		},
+		delet: function delet(item) {
+			this.fordelete = item;
+			this.showModal();
 		},
 		showModal: function showModal() {
 			this.$refs.delete.show();
@@ -86344,11 +86349,11 @@ var render = function() {
                           "d-flex justify-content-between align-items-center"
                       },
                       [
-                        _vm._v("Serial:\n\t\t\t\t\t\t"),
+                        _vm._v("Código de barras:\n\t\t\t\t\t\t"),
                         _c(
                           "b-badge",
                           { attrs: { variant: "primary", pill: "" } },
-                          [_vm._v(_vm._s(_vm.fordelete.serial))]
+                          [_vm._v(_vm._s(_vm.fordelete.codbarras))]
                         )
                       ],
                       1

@@ -64,8 +64,8 @@
 		<b-modal id="modal1" ref="delete" title="Eliminar registro">
 			<template v-if="fordelete != null">
 				<b-list-group>
-					<b-list-group-item class="d-flex justify-content-between align-items-center">Serial:
-						<b-badge variant="primary" pill>{{fordelete.serial}}</b-badge>
+					<b-list-group-item class="d-flex justify-content-between align-items-center">Código de barras:
+						<b-badge variant="primary" pill>{{fordelete.codbarras}}</b-badge>
 					</b-list-group-item>
 					<b-list-group-item class="d-flex justify-content-between align-items-center">Marca:
 						<b-badge variant="primary" pill>{{fordelete.marca}}</b-badge>
@@ -110,6 +110,7 @@
 			        { key: 'modelo', label: 'Modelo', sortable: true },
 			        { key: 'actions', label: 'Acciones'}
 			    ],
+			    csrf: $('meta[name=csrf-token]').attr('content')
 			};
 			return datas;
 		},
@@ -141,12 +142,18 @@
             onChangePage (page) {
               this.$refs.vuetable.changePage(page)
             },
+            delet(item)
+            {
+            	this.fordelete = item;
+            	this.showModal()
+            },
             showModal () {
       			this.$refs.delete.show()
 		    },
 		    hideModal () {
 		      	this.$refs.delete.hide()
 		    },
+
 		},
 		beforeMount()
 		{
