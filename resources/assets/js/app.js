@@ -22,7 +22,6 @@ import 'es6-promise/auto';
 import Vuex from 'vuex';
 
 
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -46,7 +45,7 @@ const store = new Vuex.Store({
   state: {
     options: [],
     serials: [],
-
+    proveedores: []
   },
   mutations: {
     setOptions (state, optionss) {
@@ -54,6 +53,9 @@ const store = new Vuex.Store({
     },
     setSerials (state, serialss) {
       state.serials = serialss;
+    },
+    setProvs (state, provss) {
+      state.proveedores = provss;
     }
   }
 });
@@ -69,6 +71,10 @@ const app = new Vue({
       serialsGlobals()
       {
         return store.state.serials;
+      },
+      provsGlobals()
+      {
+        return store.state.proveedores;
       }
     },
     methods:
@@ -80,6 +86,10 @@ const app = new Vue({
       setGlobalSerials(ops)
       {
         store.commit('setSerials', ops);
+      },
+      setGlobalProvs(ops)
+      {
+        store.commit('setProvs', ops);
       }
     }
 });

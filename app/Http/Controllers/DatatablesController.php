@@ -30,13 +30,11 @@ class DatatablesController extends Controller
 						});
 		return $datatables->make(true);*/ 
 	}
-	public function GetProductos(Request $request)
+	public function GetProductos()
 	{
-		$ordenar = explode('|', $request->sort);
 		$retornar = Productos::select(['prods.id', 'prods.tipo','prods.marca','prods.modelo','prods.codbarras'])
 						->where('estado','=', true)
-						->orderBy("$ordenar[0]", "$ordenar[1]")
-						->paginate(10);
+						->get();
 		return $retornar;
 	}
 	public function getStock()

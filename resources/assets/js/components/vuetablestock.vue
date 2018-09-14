@@ -37,7 +37,7 @@
 					</b-form-group>
 				</b-col>
 				<b-col md="6" class="my-1">
-					<b-form-group horizontal label="Per page" class="mb-0">
+					<b-form-group horizontal label="Por página:" class="mb-0">
 						<b-form-select :options="pageOptions" v-model="perPage"/>
 					</b-form-group>
 				</b-col>
@@ -47,9 +47,13 @@
 
 			<b-table responsive striped hover bordered show-empty stacked="md" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" @filtered="onFiltered">
 				<template slot="actions" slot-scope="row">
-					<b-button class="btn btn-success" scope="item" v-on:click="salida(row.item)"><i class="fas fa-check-circle"></i></b-button>
-					<b-button class="btn btn-info" scope="item" v-on:click="editar(row.item)"><i class="fas fa-edit"></i></b-button>
-					<b-button class="btn btn-danger" scope="item" v-on:click="delet(row.item)"><i class="far fa-trash-alt"></i></b-button>
+					<b-button v-if="row.item.fechaSalida == null" variant="success" scope="item" v-on:click="salida(row.item)">
+						<i class="far fa-check-circle"></i>
+					</b-button>
+					<b-button variant="info" scope="item" v-on:click="editar(row.item)">
+						<i class="fas fa-edit"></i>
+					</b-button>
+					<b-button variant="danger" scope="item" v-on:click="delet(row.item)"><i class="far fa-trash-alt"></i></b-button>
 				</template>
 				<!--<span slot="html" slot-scope="data" v-html="data.value"></span>-->
 			</b-table>
@@ -124,16 +128,49 @@
   		</b-modal>
   		<b-modal id="modal3" ref="edit" title="Editar registro">
 			<template v-if="fordelete != null">
-				<form method="POST" action="/admin/stock/eliminar" accept-charset="UTF-8" class="form-horizontal">
-					<v-select :options="selects.options" v-model="selecteds.optionselect" placeholder="Código de barras"></v-select>
+				<form method="POST" action="/admin/stock/editar" accept-charset="UTF-8" class="form-horizontal">
+					<label for="select-codbarras">Código de barras:</label>
+					<v-select :options="selects.options" id="select-codbarras" v-model="selecteds.optionselect" placeholder="Código de barras"></v-select>
 					<input type="hidden" name="codbarras" v-model="selecteds.optionselect">
-					<v-select :options="selects.seriales" v-model="selecteds.serialselect" placeholder="Serial" taggable></v-select>
-					<input type="hidden" name="codbarras" v-model="selecteds.serialselect">
-					<vuejs-datepicker input-class="form-control" :value="state" format="yyyy-MM-dd" name="fecha_out" placeholder="Fecha" :language="es" full-month-name></vuejs-datepicker>
+					<label for="select-serial">Serial:</label>
+					<v-select :options="selects.seriales" id="select-serial" v-model="selecteds.serialselect" placeholder="Serial" taggable></v-select>
+					<input type="hidden" name="serial" v-model="selecteds.serialselect">
+					<label for="select-prov">Proveedor:</label>
+					<v-select :options="selects.proveedores" id="select-prov" v-model="selecteds.proveedorselect" placeholder="Proveedor"></v-select>
+					<input type="hidden" name="proveedor" v-model="selecteds.proveedorselect.value">
+					
+					<div class="row">
+	                    <div class="form-group col-md-6">
+	                        <div class="form-group">
+	                            <label for="input-fechaEntrada">Fecha entrada:</label>
+	                            <vuejs-datepicker id="input-fechaEntrada" input-class="form-control" :value="stateForEditEntrada" format="yyyy-MM-dd" name="fechaEntrada" placeholder="Fecha" :language="es" full-month-name></vuejs-datepicker>
+	                        </div>
+	                    </div>
+	                    <div class="form-group col-md-6" v-if="fordelete.fechaSalida != null">
+	                        <div class="form-group">
+	                            <label for="input-fechaSalida">Fecha salida:</label>
+	            				<vuejs-datepicker id="input-fechaSalida" input-class="form-control" :value="stateForEditSalida" format="yyyy-MM-dd" name="fechaSalida" placeholder="Fecha" :language="es" full-month-name></vuejs-datepicker>
+	                        </div>
+	                   	</div>
+                	</div>
+					<div class="row">
+	                    <div class="form-group col-md-6">
+	                        <div class="form-group">
+								<label for="precioEntrada">Precio entrada:</label>
+								<input class="form-control" type="number" name="precioEntrada" v-model="fordelete.precioEntrada">
+	                        </div>
+	                    </div>
+	                    <div class="form-group col-md-6" v-if="fordelete.fechaSalida != null">
+	                        <div class="form-group">
+								<label for="precioSalida">Precio salida:</label>
+								<input class="form-control" type="number" name="precioSalida" v-model="fordelete.precioSalida">
+	                        </div>
+	                    </div>
+                    </div>
 					<input type="hidden" name="id" :value="fordelete.id">
 					<input type="hidden" name="_token" :value="csrf">
 					<div class="d-flex justify-content-end" style="margin-top: 10px">
-						<button class="btn btn-secondary" type="button" @click="hideSalida" style="margin-right: 5px">Cancelar</button>
+						<button class="btn btn-secondary" type="button" @click="hideEdit" style="margin-right: 5px">Cancelar</button>
 						<button class="btn btn-success" type="submit">Aceptar</button>
 					</div>
 				</form>
@@ -143,6 +180,7 @@
 	</div>
 </template>
 <script>
+
 	import {en, es} from 'vuejs-datepicker/dist/locale';
 	export default {
 		data: function()
@@ -152,6 +190,7 @@
             }
 			var datas = 
 			{
+				state: state.date,
 				codbarras: null,
 				selects: {
 					options: [],
@@ -160,11 +199,13 @@
 				},
 				selecteds: {
 					optionselect: null,
-					serialselect: null
+					serialselect: null,
+					proveedorselect : null
 				},
 				en: en,
 				es: es,
-				state: state.date,
+				stateForEditEntrada: null,
+				stateForEditSalida: null,
                 csrf: $('meta[name=csrf-token]').attr('content'),
 				fordelete: null,
 				items: [],
@@ -174,13 +215,14 @@
 				sortDesc: false,
 				sortDirection: 'asc',
 				perPage: 5,
-				pageOptions: [ 5, 10, 15 ],
+				pageOptions: [ 5, 10, 15, 25, 50, 100],
 				currentPage: 1,
 				fields: [
 			        { key: 'codbarras', label: 'Código de barras', sortable: true, sortDirection: 'desc' },
 			        { key: 'marca', label: 'Marca', sortable: true, 'class': 'text-center' },
 			        { key: 'modelo', label: 'Modelo', sortable: true },
 			        { key: 'serial', label: 'Serial', sortable: true },
+			        { key: 'nombre', label: 'Proveedor', sortable: true},
 			        { key: 'fechaEntrada', label: 'Fecha ingreso', sortable: true},
 			        { key: 'fechaSalida' , label: 'Fecha egreso', sortable: true},
 			        { key: 'precioEntrada', label:'Precio entrada', sortable: true},
@@ -216,23 +258,24 @@
 		    },
 		    delet(item)
 		    {
-		    	console.log(item);
 		    	this.fordelete = item;
 		    	this.showModal();
 		    },
 		    salida(item)
 		    {
 		    	this.fordelete = item;
+		    	this.stateforedit = new Date();
 		    	this.showSalida();
 		    },
 		    editar(item)
 			{
 				this.fordelete = item;
 				this.showEdit();
-				if(this.selects.options.length == 0)
+				if(this.selects.options.length == 0 || this.selects.proveedores.length == 0 || this.selects.seriales.length == 0)
 				{
 					this.selects.options = this.$parent.$options.computed.optionsGlobals();
 					this.selects.seriales = this.$parent.$options.computed.serialsGlobals();
+					this.selects.proveedores = this.$parent.$options.computed.provsGlobals();
 				}
 				for(var i = 0;i < this.selects.options.length;i++ )
 				{
@@ -248,6 +291,21 @@
 						this.selecteds.serialselect = this.selects.seriales[i];
 					}
 				}
+				for(i = 0;i<this.selects.proveedores.length;i++)
+				{
+					if(this.selects.proveedores[i].label == this.fordelete.nombre)
+					{
+						this.selecteds.proveedorselect = this.selects.proveedores[i];
+					}
+				}
+				this.stateForEditEntrada = new Date(this.fordelete.fechaEntrada);
+				this.stateForEditEntrada.setDate(this.stateForEditEntrada.getDate() + 1);
+				if(this.fordelete.fechaSalida != null)
+				{
+					this.stateForEditSalida = new Date(this.fordelete.fechaSalida);
+					this.stateForEditSalida.setDate(this.stateForEditSalida.getDate() + 1);
+				}
+				
 			},
 		    showModal () {
       			this.$refs.delete.show()

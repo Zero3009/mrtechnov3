@@ -59,6 +59,7 @@
     </div>
 </template>
 <script>
+    import {en, es} from 'vuejs-datepicker/dist/locale';
     export default {
         //el: "#app",
         data: function()
@@ -69,6 +70,8 @@
             }
             var datas=
             {
+                en: en,
+                es: es,
                 state: state.date,
                 selected: null,
                 tag: null,
@@ -84,14 +87,6 @@
                         seriales: null
                     }
                 ],
-                es: {Language: 'Spanish',
-                       months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                       monthsAbbr: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                       days: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab'],
-                       rtl: false,
-                       ymd: false,
-                       yearSuffix: ''
-                },
                 url: '/ajax/productos',
                 url2: '/ajax/codbarras',
                 url3: '/ajax/proveedores',
@@ -132,6 +127,7 @@
                     .then(response => {
                         
                         this.proveedores = response.data;
+                        this.$parent.$options.methods.setGlobalProvs(response.data);
 
                 });
             },

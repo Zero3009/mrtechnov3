@@ -61,19 +61,19 @@ class StockController extends Controller
         }
     
     }
-    public function EditStockView($id)
+    /*public function EditStockView($id)
     {
         $stock = Stock::select('stock.id','prods.codbarras','stock.serial as serial','provs.nombre','prods.modelo','prods.id as prodsid', 'stock.fechaEntrada', 'stock.precioEntrada','stock.precioSalida','stock.fechaSalida')
                         ->join('provs','stock.provs_id','=','provs.id')
                         ->join('prods','stock.prods_id','=','prods.id')
                         ->where('stock.id','=', $id)->first();
         return View::make('stock.stock_editar')->with('stock', $stock);
-    }
+    }*/
     public function EditStock(Request $request)
     {
         $this->validate($request, [
             'codbarras' => 'required',
-            'fecha' => 'required',
+            'fechaEntrada' => 'required',
             'precioEntrada' => 'required',
             'proveedor' => 'required',
             'id' => 'required'
@@ -82,7 +82,7 @@ class StockController extends Controller
         $post = $request->all();
         if($request->input('fechaSalida') && $request->input('precioSalida')){
             Stock::find($post['id'])->update([
-                'fechaEntrada' => $post['fecha'],
+                'fechaEntrada' => $post['fechaEntrada'],
                 'precioEntrada' => $post['precioEntrada'],
                 'serial' => $post['serial'],
                 'provs_id' => $post['proveedor'],
@@ -91,7 +91,7 @@ class StockController extends Controller
             ]);
         }else if($request->input('fechaSalida')){
             Stock::find($post['id'])->update([
-                'fechaEntrada' => $post['fecha'],
+                'fechaEntrada' => $post['fechaEntrada'],
                 'precioEntrada' => $post['precioEntrada'],
                 'serial' => $post['serial'],
                 'provs_id' => $post['proveedor'],
@@ -100,7 +100,7 @@ class StockController extends Controller
             ]);
         }else{
             Stock::find($post['id'])->update([
-                'fechaEntrada' => $post['fecha'],
+                'fechaEntrada' => $post['fechaEntrada'],
                 'precioEntrada' => $post['precioEntrada'],
                 'serial' => $post['serial'],
                 'provs_id' => $post['proveedor'],
