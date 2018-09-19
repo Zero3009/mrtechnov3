@@ -10,9 +10,12 @@
             <div class="card-body" style="background: #D7D7D7">
                 <!-- Mensajes de exito-->
                 @if (session('status'))
+
+
                     <div class="alert alert-success" id="ocultar">
                         {{ session('status') }}
                     </div>
+                    <img src="{{asset('/js/dancingjesus.gif')}}" />
                 @endif
                 @if(count($errors)>0)
                     <div class="alert alert-warning" role="alert" id="ocultar2">
@@ -30,7 +33,8 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </form>
                 </div>
-                <vuetablestock style="width: 100%"></vuetablestock>     
+                <vuetablestock style="width: 100%"></vuetablestock>    
+
                 <div class="panel-footer">
 
                 </div>

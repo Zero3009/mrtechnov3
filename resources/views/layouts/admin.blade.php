@@ -46,8 +46,8 @@
                     <li><a href="#">Submenu Item</a></li>
                 </ul>
             </li>
-            <li><a href="/admin/productos"><i class="fas fa-hdd"></i> Menu Item</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Menu Item</a></li>
+            <li><a href="/admin/productos"><i class="fas fa-hdd"></i> Gestionar productos</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> Gestionar proveedores</a></li>
             <li><a href="#"><i class="fab fa-instagram"></i> Menu Item</a></li>
         </ul>
     </div>
