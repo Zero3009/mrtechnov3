@@ -87409,6 +87409,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			stateForEditSalida: null,
 			csrf: $('meta[name=csrf-token]').attr('content'),
 			fordelete: null,
+			foredit: null,
+			forout: null,
 			items: [],
 			totalRows: 1,
 			filter: null,
@@ -87451,12 +87453,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.showModal();
 		},
 		salida: function salida(item) {
-			this.fordelete = item;
+			this.forout = item;
 			this.stateforedit = new Date();
 			this.showSalida();
 		},
 		editar: function editar(item) {
-			this.fordelete = item;
+			this.foredit = item;
 			this.showEdit();
 			if (this.selects.options.length == 0 || this.selects.proveedores.length == 0 || this.selects.seriales.length == 0) {
 				this.selects.options = this.$parent.$options.computed.optionsGlobals();
@@ -87464,24 +87466,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.selects.proveedores = this.$parent.$options.computed.provsGlobals();
 			}
 			for (var i = 0; i < this.selects.options.length; i++) {
-				if (this.selects.options[i].label == this.fordelete.codbarras) {
+				if (this.selects.options[i].label == this.foredit.codbarras) {
 					this.selecteds.optionselect = this.selects.options[i];
 				}
 			}
 			for (i = 0; i < this.selects.seriales.length; i++) {
-				if (this.selects.seriales[i] == this.fordelete.serial) {
+				if (this.selects.seriales[i] == this.foredit.serial) {
 					this.selecteds.serialselect = this.selects.seriales[i];
 				}
 			}
 			for (i = 0; i < this.selects.proveedores.length; i++) {
-				if (this.selects.proveedores[i].label == this.fordelete.nombre) {
+				if (this.selects.proveedores[i].label == this.foredit.nombre) {
 					this.selecteds.proveedorselect = this.selects.proveedores[i];
 				}
 			}
-			this.stateForEditEntrada = new Date(this.fordelete.fechaEntrada);
+			this.stateForEditEntrada = new Date(this.foredit.fechaEntrada);
 			this.stateForEditEntrada.setDate(this.stateForEditEntrada.getDate() + 1);
-			if (this.fordelete.fechaSalida != null) {
-				this.stateForEditSalida = new Date(this.fordelete.fechaSalida);
+			if (this.foredit.fechaSalida != null) {
+				this.stateForEditSalida = new Date(this.foredit.fechaSalida);
 				this.stateForEditSalida.setDate(this.stateForEditSalida.getDate() + 1);
 			}
 		},
@@ -88139,7 +88141,7 @@ var render = function() {
         "b-modal",
         { ref: "edit", attrs: { id: "modal3", title: "Editar registro" } },
         [
-          _vm.fordelete != null
+          _vm.foredit != null
             ? [
                 _c(
                   "form",
@@ -88314,7 +88316,7 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm.fordelete.fechaSalida != null
+                      _vm.foredit.fechaSalida != null
                         ? _c("div", { staticClass: "form-group col-md-6" }, [
                             _c(
                               "div",
@@ -88357,20 +88359,20 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.fordelete.precioEntrada,
-                                expression: "fordelete.precioEntrada"
+                                value: _vm.foredit.precioEntrada,
+                                expression: "foredit.precioEntrada"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "number", name: "precioEntrada" },
-                            domProps: { value: _vm.fordelete.precioEntrada },
+                            domProps: { value: _vm.foredit.precioEntrada },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
                                 _vm.$set(
-                                  _vm.fordelete,
+                                  _vm.foredit,
                                   "precioEntrada",
                                   $event.target.value
                                 )
@@ -88380,7 +88382,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm.fordelete.fechaSalida != null
+                      _vm.foredit.fechaSalida != null
                         ? _c("div", { staticClass: "form-group col-md-6" }, [
                             _c("div", { staticClass: "form-group" }, [
                               _c("label", { attrs: { for: "precioSalida" } }, [
@@ -88392,20 +88394,20 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.fordelete.precioSalida,
-                                    expression: "fordelete.precioSalida"
+                                    value: _vm.foredit.precioSalida,
+                                    expression: "foredit.precioSalida"
                                   }
                                 ],
                                 staticClass: "form-control",
                                 attrs: { type: "number", name: "precioSalida" },
-                                domProps: { value: _vm.fordelete.precioSalida },
+                                domProps: { value: _vm.foredit.precioSalida },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
                                     _vm.$set(
-                                      _vm.fordelete,
+                                      _vm.foredit,
                                       "precioSalida",
                                       $event.target.value
                                     )
@@ -88419,7 +88421,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("input", {
                       attrs: { type: "hidden", name: "id" },
-                      domProps: { value: _vm.fordelete.id }
+                      domProps: { value: _vm.foredit.id }
                     }),
                     _vm._v(" "),
                     _c("input", {

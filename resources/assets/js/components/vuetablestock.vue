@@ -127,7 +127,7 @@
 			<div slot="modal-footer"></div>
   		</b-modal>
   		<b-modal id="modal3" ref="edit" title="Editar registro">
-			<template v-if="fordelete != null">
+			<template v-if="foredit != null">
 				<form method="POST" action="/admin/stock/editar" accept-charset="UTF-8" class="form-horizontal">
 					<label for="select-codbarras">Código de barras:</label>
 					<v-select :options="selects.options" id="select-codbarras" v-model="selecteds.optionselect" placeholder="Código de barras"></v-select>
@@ -146,7 +146,7 @@
 	                            <vuejs-datepicker id="input-fechaEntrada" input-class="form-control" :value="stateForEditEntrada" format="yyyy-MM-dd" name="fechaEntrada" placeholder="Fecha" :language="es" full-month-name></vuejs-datepicker>
 	                        </div>
 	                    </div>
-	                    <div class="form-group col-md-6" v-if="fordelete.fechaSalida != null">
+	                    <div class="form-group col-md-6" v-if="foredit.fechaSalida != null">
 	                        <div class="form-group">
 	                            <label for="input-fechaSalida">Fecha salida:</label>
 	            				<vuejs-datepicker id="input-fechaSalida" input-class="form-control" :value="stateForEditSalida" format="yyyy-MM-dd" name="fechaSalida" placeholder="Fecha" :language="es" full-month-name></vuejs-datepicker>
@@ -157,17 +157,17 @@
 	                    <div class="form-group col-md-6">
 	                        <div class="form-group">
 								<label for="precioEntrada">Precio entrada:</label>
-								<input class="form-control" type="number" name="precioEntrada" v-model="fordelete.precioEntrada">
+								<input class="form-control" type="number" name="precioEntrada" v-model="foredit.precioEntrada">
 	                        </div>
 	                    </div>
-	                    <div class="form-group col-md-6" v-if="fordelete.fechaSalida != null">
+	                    <div class="form-group col-md-6" v-if="foredit.fechaSalida != null">
 	                        <div class="form-group">
 								<label for="precioSalida">Precio salida:</label>
-								<input class="form-control" type="number" name="precioSalida" v-model="fordelete.precioSalida">
+								<input class="form-control" type="number" name="precioSalida" v-model="foredit.precioSalida">
 	                        </div>
 	                    </div>
                     </div>
-					<input type="hidden" name="id" :value="fordelete.id">
+					<input type="hidden" name="id" :value="foredit.id">
 					<input type="hidden" name="_token" :value="csrf">
 					<div class="d-flex justify-content-end" style="margin-top: 10px">
 						<button class="btn btn-secondary" type="button" @click="hideEdit" style="margin-right: 5px">Cancelar</button>
@@ -208,6 +208,8 @@
 				stateForEditSalida: null,
                 csrf: $('meta[name=csrf-token]').attr('content'),
 				fordelete: null,
+				foredit: null,
+				forout: null,
 				items: [],
 				totalRows: 1,
 				filter: null,
@@ -263,13 +265,13 @@
 		    },
 		    salida(item)
 		    {
-		    	this.fordelete = item;
+		    	this.forout = item;
 		    	this.stateforedit = new Date();
 		    	this.showSalida();
 		    },
 		    editar(item)
 			{
-				this.fordelete = item;
+				this.foredit = item;
 				this.showEdit();
 				if(this.selects.options.length == 0 || this.selects.proveedores.length == 0 || this.selects.seriales.length == 0)
 				{
@@ -279,30 +281,30 @@
 				}
 				for(var i = 0;i < this.selects.options.length;i++ )
 				{
-					if(this.selects.options[i].label == this.fordelete.codbarras)
+					if(this.selects.options[i].label == this.foredit.codbarras)
 					{
 						this.selecteds.optionselect = this.selects.options[i];
 					}
 				}
 				for(i = 0;i<this.selects.seriales.length;i++)
 				{
-					if(this.selects.seriales[i] == this.fordelete.serial)
+					if(this.selects.seriales[i] == this.foredit.serial)
 					{
 						this.selecteds.serialselect = this.selects.seriales[i];
 					}
 				}
 				for(i = 0;i<this.selects.proveedores.length;i++)
 				{
-					if(this.selects.proveedores[i].label == this.fordelete.nombre)
+					if(this.selects.proveedores[i].label == this.foredit.nombre)
 					{
 						this.selecteds.proveedorselect = this.selects.proveedores[i];
 					}
 				}
-				this.stateForEditEntrada = new Date(this.fordelete.fechaEntrada);
+				this.stateForEditEntrada = new Date(this.foredit.fechaEntrada);
 				this.stateForEditEntrada.setDate(this.stateForEditEntrada.getDate() + 1);
-				if(this.fordelete.fechaSalida != null)
+				if(this.foredit.fechaSalida != null)
 				{
-					this.stateForEditSalida = new Date(this.fordelete.fechaSalida);
+					this.stateForEditSalida = new Date(this.foredit.fechaSalida);
 					this.stateForEditSalida.setDate(this.stateForEditSalida.getDate() + 1);
 				}
 				
