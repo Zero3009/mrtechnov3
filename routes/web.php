@@ -12,14 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('stock.stock');
+    return view('auth.login');
 });
-
-Route::get('/admin/inicio', ['uses' => 'InicioController@Index']);
-//FIN INICIO
-
-//AJAX
-Route::get('/ajax/productos', ['uses' => 'AjaxController@getProductos']);
+Route::middleware(['auth'])->group(function()
+{
+	Route::get('/admin/inicio', ['uses' => 'InicioController@Index']);
+	Route::get('/ajax/productos', ['uses' => 'AjaxController@getProductos']);
 Route::get('/ajax/marcas', ['uses' => 'AjaxController@getMarcas']);
 Route::get('/ajax/codbarras', ['uses' => 'AjaxController@getCodbarras']);
 Route::get('/ajax/proveedores', ['uses' => 'AjaxController@getProveedores']);
@@ -72,4 +70,13 @@ Route::get('/admin/recuperacion/proveedores', ['uses' => 'RecuperacionController
 Route::post('/admin/recuperacion/proveedores/post', ['uses' => 'RecuperacionController@ProveedoresRecuperacion']);
 Route::get('/admin/recuperacion/productos', ['uses' => 'RecuperacionController@IndexProductos']);
 Route::post('/admin/recuperacion/productos/post', ['uses' => 'RecuperacionController@ProductosRecuperacion']);
+});
+//->middleware('auth');
+//FIN INICIO
+
+//AJAX
+
 //FIN RECUPERACION
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

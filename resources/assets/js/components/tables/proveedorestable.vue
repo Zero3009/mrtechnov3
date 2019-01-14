@@ -39,6 +39,13 @@
             }
             return datas;
         },
+        computed:
+        {
+            ajaxNuevo: function()
+            {
+                if(this.data.nombre )
+            }
+        },
         methods:
         {
             search () {
