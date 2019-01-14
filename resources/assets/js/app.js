@@ -20,14 +20,18 @@ import moment from 'moment';
 import BootstrapVue from 'bootstrap-vue';
 import 'es6-promise/auto';
 import Vuex from 'vuex';
+import FilterBar from './components/FilterBar';
+import VueEvents from 'vue-events'
+import CustomActionsProductos from './components/tables/actions/CustomActionsProductos'
 
-
+Vue.component('custom-actions-productos', CustomActionsProductos)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 Vue.use(BootstrapVue);
+Vue.use(VueEvents);
 Vue.component('moment', moment);
 Vue.component('v-select', vSelect);
 Vue.component('axios', axios);
@@ -40,6 +44,7 @@ Vue.component('productos', require('./components/productos.vue'));
 Vue.component('productosnuevo', require('./components/productosnuevo.vue'));
 Vue.component('proveedores', require('./components/proveedores'));
 Vue.component('vuetablestock', require('./components/vuetablestock'));
+Vue.component('filter-bar', FilterBar)
 
 const store = new Vuex.Store({
   state: {
@@ -90,6 +95,7 @@ const app = new Vue({
       setGlobalProvs(ops)
       {
         store.commit('setProvs', ops);
-      }
+      },
+	  
     }
 });

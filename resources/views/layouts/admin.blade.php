@@ -47,7 +47,7 @@
                 </ul>
             </li>
             <li><a href="/admin/productos"><i class="fas fa-hdd"></i> Gestionar productos</a></li>
-            <li><a href="#"><i class="fas fa-users"></i> Gestionar proveedores</a></li>
+            <li><a href="/admin/proveedores"><i class="fas fa-users"></i> Gestionar proveedores</a></li>
             <li><a href="#"><i class="fab fa-instagram"></i> Menu Item</a></li>
         </ul>
     </div>

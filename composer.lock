@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5bca48e56bbf3a25645858fcab9c285",
+    "content-hash": "12c9a4469d3c68044f0b2dc775e6691c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1265,6 +1265,65 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "santigarcor/laravel-vuetable",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/santigarcor/laravel-vuetable.git",
+                "reference": "f787f8ad6c82d9c3b57627aa5bd793e65717d379"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/santigarcor/laravel-vuetable/zipball/f787f8ad6c82d9c3b57627aa5bd793e65717d379",
+                "reference": "f787f8ad6c82d9c3b57627aa5bd793e65717d379",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.4",
+                "illuminate/http": "~5.4",
+                "illuminate/support": "~5.4",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vuetable\\VuetableServiceProvider"
+                    ],
+                    "aliases": {
+                        "Vuetable": "Vuetable\\VuetableFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vuetable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Santiago Garcia",
+                    "homepage": "http://santigarcor.me"
+                }
+            ],
+            "description": "Vuetable laravel backend package",
+            "keywords": [
+                "laravel",
+                "table",
+                "vue",
+                "vuetable"
+            ],
+            "time": "2017-12-18T16:47:14+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

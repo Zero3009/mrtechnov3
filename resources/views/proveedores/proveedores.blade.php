@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('main-content')
-<div class="row">
+<!--<div class="row">
     <div class="col-md-12" >
         <div class="panel panel-default">
             <div class="panel-heading" style="background: #222d32   ; color: #FFFFFF;  opacity: 0.9;">
@@ -20,8 +20,8 @@
                 <div class="alert alert-success" id="ocultar">
                     {{ session('status') }}
                 </div>
-            @endif
-                <proveedores></proveedores>
+            @endif-->
+                <proveedores style="width: 100%"></proveedores>
                 <!--<table class="table table-striped table-bordered tabla-filtro" width="100%" id="tabla">
                     <thead>
                         <tr>
@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                 </table>-->
-            </div>
+            <!--</div>
             <div class="panel-footer">
             </div>
         </div>
@@ -57,41 +57,10 @@
             </form>
         </div>
     </div>
-</div>
+</div>-->
 @stop
 @section('js')
 @push('scripts')
 <script>
-/*$(document).ready(function () {
-var tabla = $('#tabla').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": '/datatables/getproveedores',
-    "columns":[
-        {data: 'nombre', name:'nombre'},
-        {data: 'tel', name:'tel'},
-        {data: 'action', name: 'action', orderable: false}
-    ],
-    "language":{
-                url: "{!! asset('/plugins/datatables/lenguajes/spanish.json') !!}"
-    },
-    "bFilter": true,
-});
-
-});
-$('#tabla').on('draw.dt', function () {
-    $(".delete").click(function(){
-        $('#delete').modal();
-        var id = $(this).data('id');
-        console.log(id);
-        $("#titulo").html(" Eliminar proveedor "+$(this).closest("tr").children("td").eq(0).html());
-        $(".id").val(id);
-    });
-});
-
-$("#ocultar").fadeTo(8000, 500).slideUp(500, function(){
-    $("ocultar").alert('close');
-});
-*/
 </script>
 @endsection

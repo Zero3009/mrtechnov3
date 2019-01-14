@@ -27,6 +27,7 @@ class ProductosController extends Controller
     }
     public function NuevoProducto(Request $request)
     {
+        //return $request->tipo['label'];
     	DB::beginTransaction();
     	try 
         {
@@ -43,13 +44,13 @@ class ProductosController extends Controller
                             ->withInput();
             }
             $query = new Productos;
-                $query->tipo = $request->tipo;
+                $query->tipo = $request->tipo['label'];
                 $query->modelo = $request->modelo;
-                $query->marca = $request->marca;
+                $query->marca = $request->marca['label'];
                 $query->codbarras = $request->codbarras;
             $query->save();
             DB::commit();
-            return redirect('/admin/productos');
+            return 'work';
         }
         catch(Exception $e)
         {
@@ -75,11 +76,11 @@ class ProductosController extends Controller
             'marca' => $post['marca'],
             'codbarras' => $post['codbarras']
         ]);
-        return Redirect::to('/admin/productos')->with('status', 'Se ha editado correctamente la etiqueta.');
+        return 'work';
     }
     public function EliminarProducto(Request $request)
     {
-        //return $request['id'];
+        //return $request;
         $this->validate($request, [
             'id' => 'required|integer',
         ]);
@@ -87,6 +88,6 @@ class ProductosController extends Controller
         $queryinfo = Productos::find($request['id']);
             $queryinfo->estado = false;
         $queryinfo->save();
-        return Redirect::to('/admin/productos')->with('status', 'Se ha eliminado correctamente el producto.');
+        //return 'work';
     }
 }

@@ -51,9 +51,9 @@ Route::post('/admin/proveedores/eliminar', ['uses' => 'ProveedoresController@Eli
 
 //PRODUCTOS
 Route::get('/admin/productos', ['uses' => 'ProductosController@Index']);
-Route::get('/admin/productos/nuevo', ['uses' => 'ProductosController@NuevoProductoView']);
+Route::post('/admin/productos/nuevo', ['uses' => 'ProductosController@NuevoProducto']);
 Route::post('/admin/productos/nuevo/post', ['uses' => 'ProductosController@NuevoProducto']);
-Route::get('/admin/productos/editar/{id}', ['uses' => 'ProductosController@EditarProductoView']);
+Route::post('/admin/productos/editar', ['uses' => 'ProductosController@EditarProducto']);
 Route::post('/admin/productos/editar/post', ['uses' => 'ProductosController@EditarProducto']);
 Route::post('/admin/productos/eliminar', ['uses' => 'ProductosController@EliminarProducto']);
 //FIN PRODUCTOS
