@@ -21,11 +21,11 @@ class StockController extends Controller
     	DB::beginTransaction();
     	try 
         {
-            $validator = Validator::make($request->all(), [
+            /*$validator = Validator::make($request->all(), [
                 'codbarras' => 'required',
                 'proveedor' => 'required',
                 'precioEntrada' => 'required',
-                'fecha' => 'required',
+                'fechaEntrada' => 'required',
             ]);
             if ($validator->fails()) {
                 //return 'hola';
@@ -33,20 +33,26 @@ class StockController extends Controller
                             ->back()
                             ->withErrors($validator)
                             ->withInput();
-            }   
+            } */  
+            //return sizeof($request->all());
 
-
-                for ($i=0; $i < sizeof($request->codbarras); $i++) {
-                    $arraySeriales = explode(",", $request->seriales[$i]);
-                    for($h = 0;$h < sizeof($arraySeriales);$h++){                        
+                for ($i=0; $i < sizeof($request->all()); $i++) {
+                    //return 'entr';
+                    //$arraySeriales = explode(",", $request->seriales[$i]);
+                    for($h = 0;$h < sizeof($request[$i]['seriales']);$h++){   
+                    //return $request[0]['seriales'][0];                     
                         $query = new Stock;
-                            $query->prods_id = $request->codbarras[$i];
-                            $query->provs_id = $request->proveedor[$i];
-                            $query->serial = $arraySeriales[$h];
-                            $query->precioEntrada = $request->precioEntrada[$i];
-                            $query->fechaEntrada =$request->fecha[$i];
+                            $query->prods_id = $request[$i]['codbarras']['value'];
+                            $query->provs_id = $request[$i]['proveedor']['value'];
+
+                            $query->serial = $request[$i]['seriales'][$h];
+                            $query->precioEntrada = $request[$i]['precioEntrada'];
+                            
+                            $query->fechaEntrada =$request[$i]['state'];
+                        
                         $query->save();
                     }
+                    //return 'llego2';
                 }
             
             DB::commit();

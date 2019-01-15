@@ -41,7 +41,7 @@ Route::get('/datatables/getproductoseliminados',['uses' => 'DatatablesController
 Route::get('/admin/proveedores', 'ProveedoresController@Index');
 
 Route::post('/admin/proveedores/nuevo/post', ['uses' => 'ProveedoresController@NuevoProveedor']);
-Route::get('/admin/proveedores/nuevo', ['uses' => 'ProveedoresController@NuevoProveedorView']);
+Route::post('/admin/proveedores/nuevo', ['uses' => 'ProveedoresController@NuevoProveedor']);
 Route::get('/admin/proveedores/editar/{id}', ['uses' => 'ProveedoresController@EditarProveedorView']);
 Route::post('/admin/proveedores/editar/post', ['uses' => 'ProveedoresController@EditarProveedorUpdate']);
 Route::post('/admin/proveedores/eliminar', ['uses' => 'ProveedoresController@EliminarProveedor']);
@@ -58,7 +58,7 @@ Route::post('/admin/productos/eliminar', ['uses' => 'ProductosController@Elimina
 
 //STOCK
 Route::get('/admin/stock', ['uses' => 'StockController@Index']);
-Route::post('/admin/stock/nuevo/post', ['uses' => 'StockController@NewStock']);
+Route::post('/admin/stock/nuevo', ['uses' => 'StockController@NewStock']);
 //Route::get('/admin/stock/editar/{id}', ['uses' => 'StockController@EditStockView']);
 Route::post('/admin/stock/editar', ['uses' => 'StockController@EditStock']);
 Route::post('/admin/stock/eliminar', ['uses' => 'StockController@EliminarStock']);
@@ -79,4 +79,4 @@ Route::post('/admin/recuperacion/productos/post', ['uses' => 'RecuperacionContro
 //FIN RECUPERACION
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="card-body" style="background: #D7D7D7">
-			<proveedorestable></proveedorestable>	
+			<proveedorestable ref="vuetab"></proveedorestable>	
 		</div>
     	<div class="panel-footer">
         </div>
@@ -24,32 +24,16 @@
 	                    <div class="col-md-6">
 	                        <div class="form-group">
 	                            <label for="nombre">Nombre:</label>
-	                            <input class="form-control" type="text" name="nombre">
-	                        	<!--<v-select :options="tipos" v-model="data.tipo" id="tipo-select" placeholder="Tipo de producto" taggable required></v-select>-->
+	                            <input class="form-control" type="text" name="nombre" v-model="data.nombre">
 	                        </div>
 	                    </div>
 	                    <div class="col-md-6">
 	                        <div class="form-group">
 	                            <label for="tel">Tel:</label>
-	                            <input class="form-control" type="number" name="tel"> 
-	            				<!--<v-select :options="marcas" id="marca-select" v-model="data.marca" placeholder="Marca" taggable required></v-select>-->
+	                            <input class="form-control" type="number" name="tel" v-model="data.tel"> 
 	                        </div>
 	                    </div>
 	                </div>
-	                <!--<div class="row">
-	                    <div class="form-group col-md-6">
-	                        <div class="form-group">
-	                            <label for="modelo">Modelo:</label>
-	                            <input class="form-control" id="modelo" style="width: 100%" name="modelo" v-model="data.modelo" type="text" required>
-	                        </div>
-	                    </div>
-	                    <div class="form-group col-md-6">
-	                        <div class="form-group">
-	                            <label for="codbarras">Código de barras:</label>
-	            				<input class="form-control" id="codbarras" stype="text" v-model="data.codbarras" name="codbarras" required>
-	                        </div>
-	                   </div>
-	                </div>-->
 	            </div>
 	            <div class="d-flex justify-content-end" style="margin-top: 10px">
 		            <button class="btn btn-secondary" type="button" @click="hideModal" style="margin-right: 5px">Cancelar</button>
@@ -68,7 +52,10 @@
 		{
 			var datas =
 			{
-
+				data: {
+					nombre: "",
+					tel: ""
+				}
 			}
 			return datas;
 		},
@@ -76,6 +63,17 @@
 		{
 			proveedorestable
 		},
+		computed:
+        {
+            ajaxNuevo: function()
+            {
+                if(this.data.nombre != "")
+                {
+                    return this.data;
+                }
+                return 'fail';
+            }
+        },
 		methods:
 		{
 			ShowModal: function()
@@ -85,6 +83,14 @@
 			hideModal: function()
 			{
 				this.$refs.modal.hide();
+			},
+			newItem: function()
+			{
+				axios.post('/admin/proveedores/nuevo',
+					this.ajaxNuevo).then(response => {
+						this.$refs.vuetab.$refs.vuetable.refresh();
+						this.$refs.modal.hide();
+					});
 			}
 		}
 	}
