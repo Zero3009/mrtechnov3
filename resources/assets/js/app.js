@@ -23,6 +23,8 @@ import Vuex from 'vuex';
 import FilterBar from './components/FilterBar';
 import VueEvents from 'vue-events'
 import CustomActionsProductos from './components/tables/actions/CustomActionsProductos'
+import VueToastr from '@deveodk/vue-toastr'
+import '@deveodk/vue-toastr/dist/@deveodk/vue-toastr.css'
 
 Vue.component('custom-actions-productos', CustomActionsProductos)
 /**
@@ -45,6 +47,7 @@ Vue.component('productosnuevo', require('./components/productosnuevo.vue'));
 Vue.component('proveedores', require('./components/proveedores'));
 Vue.component('vuetablestock', require('./components/vuetablestock'));
 Vue.component('filter-bar', FilterBar)
+Vue.use(VueToastr)
 
 const store = new Vuex.Store({
   state: {

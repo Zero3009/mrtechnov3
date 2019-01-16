@@ -23,6 +23,7 @@
         "vuetable-2": "^1.7.5"
     },
     "dependencies": {
+        "@deveodk/vue-toastr": "^1.0.4",
         "@fortawesome/fontawesome-svg-core": "^1.2.4",
         "@fortawesome/free-solid-svg-icons": "^5.3.1",
         "@fortawesome/vue-fontawesome": "^0.1.1",

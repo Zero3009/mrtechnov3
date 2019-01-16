@@ -56,14 +56,28 @@ class StockController extends Controller
                 }
             
             DB::commit();
-            return redirect('/admin/stock')->with('status', 'Se ha agregado correctamente el/los registro/s.');
+            return response()->json([
+                'status' => 'success',
+                'msg'    => 'Exito'
+            ]);
         }
-        catch(Exception $e)
+        catch(\Illuminate\Database\QueryException $e)
         {
         	DB::rollback();
-        	return redirect()
-                ->back()
-                ->withErrors('Se ha producido un errro: ( ' . $e->getCode() . ' ): ' . $e->getMessage().' - Copie este texto y envielo a informática');
+            //return $e;
+        	if($e->getCode() == 23505)
+            {
+                return response()->json([
+                    'status' => 'error',
+                    'title'  => 'Resultado:',
+                    'msg'    => 'Error, el formulario ya existe',
+                    'type'   => 'error' 
+                ],400);    
+            }
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Error ' . $e->getCode() . ': ' . $e->getMessage() . 'Contacte a informática'
+            ],404);
         }
     
     }

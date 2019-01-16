@@ -111,11 +111,14 @@
             {
                 axios.post('/admin/stock/nuevo',
                     this.data).then(response => {
+                        this.$toastr(response.data)
                         for(var i = 0; i < this.rowsdynamic.length; i++){
                            Vue.delete(this.rowsdynamic, i)
                         }
                         this.rowsdynamic.push({id: 1, codbarras: null, proveedor: null, seriales: null, state: this.state, precioEntrada: 0});
 
+                    }).catch(error => {
+                        this.$toastr('add', error.response.data);
                     });
             },
             cargarSelects()
