@@ -1,6 +1,6 @@
 export default {
   table: {
-    tableClass: "table responsive striped hover bordered show-empty",
+    tableClass: 'table table-striped table-responsive="md" table-hover table-bordered show-empty',
     ascendingIcon: "glyphicon glyphicon-chevron-up",
     descendingIcon: "glyphicon glyphicon-chevron-down",
     handleIcon: "glyphicon glyphicon-menu-hamburger",
@@ -13,10 +13,10 @@ export default {
   },
   pagination: {
     wrapperClass: "pagination pull-right",
-    activeClass: "btn-primary",
-    disabledClass: "disabled",
+    activeClass: "btn btn-primary",
+    disabledClass: "btn btn-border",
     pageClass: "btn btn-border",
-    linkClass: "btn btn-border",
+    linkClass: "page-item",
     icons: {
       first: "glyphicon glyphicon-step-backward",
       prev: "glyphicon glyphicon-chevron-left",

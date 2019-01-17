@@ -1,6 +1,7 @@
 <template>
     
     <div>
+        {{verificarSeriales}}
         <div class="border border-primary">
                     <form @submit.prevent="newItem" accept-charset="UTF-8" class="form-horizontal">
         <table class="table table-striped table-bordered" name="tabla" id="tabla">
@@ -34,6 +35,15 @@
                                 multiple 
                                 placeholder="Seriales">
                     </v-select>
+                    <template v-if="n.seriales.length == 0">
+                            <small id="emailHelp" class="form-text text-danger">Complete serial para continuar</small>
+                    </template>
+                    <template v-else-if="verificarSeriales[n.id -1].status == true">
+                            <small id="emailHelp" class="form-text text-primary">Correcto</small>
+                    </template>
+                    <template v-else>
+                            <small id="emailHelp" class="form-text text-danger">Serial ya existe: {{verificarSeriales[n.id -1].errores.toString()}} </small>    
+                    </template>
                     <!--<template v-if="n.seriales != null">
                         <input type="hidden" name="seriales[]" v-model="n.seriales">
                     </template>-->
@@ -58,7 +68,12 @@
             </tr>
             
         </table>
-            <input class="btn btn btn-success" tabindex="1" type="submit" value="Cargar" style="margin-bottom: 10px; margin-left: 10px">
+            <template v-if="ready == true">
+                <input class="btn btn btn-success" tabindex="1" type="submit" value="Cargar" style="margin-bottom: 10px; margin-left: 10px">
+            </template>
+            <template v-else>
+                <input class="btn btn btn-success" tabindex="1" disabled type="submit" value="Cargar" style="margin-bottom: 10px; margin-left: 10px">
+            </template>
         </form>
         </div>
     </div>
@@ -89,7 +104,7 @@
                         id: 1,
                         codbarras: null,
                         proveedor: null,
-                        seriales: null,
+                        seriales: [],
                         state: state.date,
                         precioEntrada: 0
                     }
@@ -102,8 +117,52 @@
             return datas;
         },
         computed: {
+            ready: function()
+            {
+                var flag = true
+                for(var i = 0;i<this.rowsdynamic.length;i++)
+                {
+                    if(this.rowsdynamic[i].codbarras != null && this.rowsdynamic[i].proveedor != null && this.rowsdynamic[i].seriales.length != 0 && this.rowsdynamic[i].precioEntrada > 0 && this.verificarSeriales[i].status == true)
+                    {
+                        flag = true
+                    }
+                    else
+                    {
+                        return false
+                    }
+                }
+                return true
+            },
             data: function(){
                 return this.rowsdynamic
+            },
+            verificarSeriales: function()
+            {
+                var testing = []
+                for(var i = 0;i < this.rowsdynamic.length;i++)
+                {
+                    testing.push({id: i, errores: [], status: true})
+                    for(var j = 0;j < this.rowsdynamic[i].seriales.length;j++)
+                    {
+                        for(var k = 0;k < this.seriales.length; k++){
+                            console.log(this.rowsdynamic[i].seriales[j])
+                            console.log(this.seriales[k])
+
+                            if(this.rowsdynamic[i].seriales[j] == this.seriales[k])
+                            {
+                                console.log('entro')
+                                testing[i].status = false
+                                testing[i].errores.push(this.rowsdynamic[i].seriales[j])
+                                break;
+                            }
+                            else if(testing[i].status != false)
+                            {
+                                testing[i].status = true
+                            }
+                        }
+                    }
+                }
+                return testing;
             }
         },
         methods: {
@@ -111,11 +170,11 @@
             {
                 axios.post('/admin/stock/nuevo',
                     this.data).then(response => {
-                        this.$toastr(response.data)
-                        for(var i = 0; i < this.rowsdynamic.length; i++){
+                        this.$toastr('add', response.data)
+                        for(var i = this.rowsdynamic.length - 1; i >= 0; i--){
                            Vue.delete(this.rowsdynamic, i)
                         }
-                        this.rowsdynamic.push({id: 1, codbarras: null, proveedor: null, seriales: null, state: this.state, precioEntrada: 0});
+                        this.rowsdynamic.push({id: 1, codbarras: null, proveedor: null, seriales: [], state: this.state, precioEntrada: 0});
 
                     }).catch(error => {
                         this.$toastr('add', error.response.data);
@@ -159,13 +218,17 @@
             },
             aument() 
             {
-                return this.rowsdynamic.push({id: this.rowsdynamic[this.rowsdynamic.length - 1].id + 1, codbarras: null, proveedor: null, seriales: null, state: this.state, precioEntrada: 0});
+                return this.rowsdynamic.push({id: this.rowsdynamic[this.rowsdynamic.length - 1].id + 1, codbarras: null, proveedor: null, seriales: [], state: this.state, precioEntrada: 0});
             },
             decrease(event) 
             {
                 var index = this.rowsdynamic.findIndex(x => x.id==event.currentTarget.id);
                 return Vue.delete(this.rowsdynamic, index);
             }
+        },
+        watch:
+        {
+
         },
         beforeMount()
         {

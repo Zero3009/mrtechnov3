@@ -58,19 +58,21 @@ class StockController extends Controller
             DB::commit();
             return response()->json([
                 'status' => 'success',
-                'msg'    => 'Exito'
-            ]);
+                'title'  => 'Resultado:',
+                'msg'    => 'Exito',
+                'type'   => 'success'
+            ],200);
         }
         catch(\Illuminate\Database\QueryException $e)
         {
         	DB::rollback();
             //return $e;
-        	if($e->getCode() == 23505)
+        	if($e->getCode() == 23502)
             {
                 return response()->json([
                     'status' => 'error',
-                    'title'  => 'Resultado:',
-                    'msg'    => 'Error, el formulario ya existe',
+                    'title'  => 'Resultado: ya existe el registro',
+                    'msg'    =>  $e->getMessage(),
                     'type'   => 'error' 
                 ],400);    
             }
