@@ -45,7 +45,6 @@ Vue.component('stock', require('./components/stock.vue'));
 Vue.component('productos', require('./components/productos.vue'));
 Vue.component('productosnuevo', require('./components/productosnuevo.vue'));
 Vue.component('proveedores', require('./components/proveedores'));
-Vue.component('vuetablestock', require('./components/vuetablestock'));
 Vue.component('filter-bar', FilterBar)
 Vue.use(VueToastr)
 

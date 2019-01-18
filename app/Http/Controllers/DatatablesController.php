@@ -34,11 +34,10 @@ class DatatablesController extends Controller
 		$retornar = Stock::select(['stock.id','prods.codbarras','prods.marca','prods.modelo','stock.serial','stock.fechaEntrada','stock.fechaSalida','stock.precioEntrada','stock.precioSalida','provs.nombre'])
 							->join('prods','stock.prods_id','=','prods.id')
 							->join('provs','stock.provs_id','=','provs.id')
-							->where('stock.estado','=',true)
-							->get();
+							->where('stock.estado','=',true);
 		//					->orderBy("$ordenar[0]", "$ordenar[1]")
 		//					->paginate(15);
-		return Response::json($retornar);
+		return Vuetable::of($retornar)->make();
 		/*$datatables = app('datatables')
 						->of($retornar)->addColumn('action', function($retornar){
 							return '<a href="/admin/stock/editar/'.$retornar->id.'" class="btn btn-xs btn-primary details-control"><i class="glyphicon glyphicon-edit"></i></a><a href="#" class="btn btn-xs btn-danger delete" data-id="'.$retornar->id.'"><i class="glyphicon glyphicon-trash"></i></a><a href="#" class="btn btn-xs btn-success out" data-id="'.$retornar->id.'"><i class="glyphicon glyphicon-check"></i></a>';

@@ -1,5 +1,5 @@
 <template>
-	<div class="border border-dark" style="border-width:1.5px !important;">
+	<!--<div class="border border-dark" style="border-width:1.5px !important;">
 		<b-container fluid>
 			<b-row>
 				<b-col md="6" class="my-1">
@@ -42,9 +42,10 @@
 					</b-form-group>
 				</b-col>
 			</b-row>
+-->
 
 			<!-- tabla -->
-
+<!--
 			<b-table responsive striped hover bordered show-empty stacked="md" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection" @filtered="onFiltered">
 				<template slot="actions" slot-scope="row">
 					<b-button v-if="row.item.fechaSalida == null" variant="success" scope="item" v-on:click="salida(row.item)">
@@ -55,8 +56,9 @@
 					</b-button>
 					<b-button variant="danger" scope="item" v-on:click="delet(row.item)"><i class="far fa-trash-alt"></i></b-button>
 				</template>
-				<!--<span slot="html" slot-scope="data" v-html="data.value"></span>-->
-			</b-table>
+	
+	-->			<!--<span slot="html" slot-scope="data" v-html="data.value"></span>-->
+		<!--	</b-table>
 			<b-row>
 		      <b-col md="6" class="my-1">
 		        <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
@@ -177,15 +179,34 @@
 			</template>
 			<div slot="modal-footer"></div>
   		</b-modal>
-	</div>
+	</div>-->
+	<div>
+        <div class="form-inline">
+                <input type="text" class="form-control mb-2 mr-sm-2" v-model="searchText" placeholder="Search..." @keyup="search">        
+        </div>    
+        <vuetable ref="vuetable"
+            api-url="/datatables/getstock"
+            :css="css.table"
+            :fields="columns"
+            pagination-path=""
+            :per_page="1"
+            :append-params="moreParams"
+            @vuetable:pagination-data="onPaginationData"
+        >
+        </vuetable>
+        <vuetable-pagination ref="pagination"
+            @vuetable-pagination:change-page="onChangePage"
+            :css="css.pagination">
+        </vuetable-pagination>
+    </div>
 </template>
 <script>
-
+	import CssConfig from './CssConfig.js'
 	import {en, es} from 'vuejs-datepicker/dist/locale';
 	export default {
 		data: function()
 		{
-			var state = {
+			/*var state = {
                 date: new Date()
             }
 			var datas = 
@@ -231,21 +252,73 @@
 			        { key: 'precioSalida', label: 'Precio salida', sortable: true},
 			        { key: 'actions', label: 'Acciones'}
 			      ],
-			}
-			return datas;
+			}*/
+			var data =
+            {
+                data: null,
+                searchText: "",
+                css: CssConfig,
+                moreParams: {},
+                columns: [ 
+                			{name: 'codbarras', title: 'Código de barras', sortField:'codbarras'},
+                            {name: 'marca', title: 'Marca', sortField: 'marca'},
+                            {name: 'modelo', title: 'Modelo', sortField: 'modelo'},
+                            {name: 'serial', title: 'Serial', sortField: 'serial'},
+                            {name: 'nombre', title:'Nombre', sortField: 'nombre'},
+                            {name: 'fechaEntrada', title: 'Entrada', sortField:'fechaEntrada'},
+                            {name: 'fechaSalida', title: 'Salida', sortField: 'fechaSalida'},
+                            {name: 'precioEntrada', title: 'Compra', sortField: 'precioEntrada'},
+                            {name: 'precioSalida', title: 'Venta', sortField: 'precioSalida'}
+                        ],
+            }
+            return data;
 			
 		},
 		computed:{
-			sortOptions () {
+			/*sortOptions () {
 			      // Create an options list from our fields
 			      return this.fields
 			        .filter(f => f.sortable)
 			        .map(f => { return { text: f.label, value: f.key } })
-		    }
+		    }*/
 		},
 		methods:
 		{
-			stock()
+			search () {
+              this.moreParams={
+                searchable: [
+                  //    'prods.id',
+                  'prods.codbarras',
+                  'prods.marca',
+                  'prods.modelo',
+                  'stock.serial', 
+                  'provs.nombre',
+                  //'stock.fechaEntrada',
+                  //'stock.fechaSalida',
+                  'stock.precioEntrada',
+                  'stock.precioSalida'     
+                ],
+                'filter': this.searchText
+              }
+              Vue.nextTick( () => this.$refs.vuetable.refresh())
+            },
+            onPaginationData (paginationData) {
+                this.$refs.pagination.setPaginationData(paginationData)
+            },
+            onChangePage (page) {
+                this.$refs.vuetable.changePage(page)
+            },
+            onFilterSet (filterText) {
+                this.moreParams = {
+                    'filter': filterText
+                }
+                Vue.nextTick( () => this.$refs.vuetable.refresh())
+            },
+            onFilterReset () {
+                this.moreParams = {}
+                Vue.nextTick( () => this.$refs.vuetable.refresh())
+            }
+			/*stock()
 			{
 				axios.get('/datatables/getstock')
 					.then(response => {
@@ -326,11 +399,7 @@
 		    },
 		    hideEdit(){
 		    	this.$refs.edit.hide()
-		    }
-		},
-		beforeMount()
-		{
-			this.stock();
+		    }*/
 		}
 	}
 </script>
