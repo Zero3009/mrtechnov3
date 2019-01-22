@@ -260,15 +260,57 @@
                 css: CssConfig,
                 moreParams: {},
                 columns: [ 
-                			{name: 'codbarras', title: 'Código de barras', sortField:'codbarras'},
-                            {name: 'marca', title: 'Marca', sortField: 'marca'},
-                            {name: 'modelo', title: 'Modelo', sortField: 'modelo'},
-                            {name: 'serial', title: 'Serial', sortField: 'serial'},
-                            {name: 'nombre', title:'Nombre', sortField: 'nombre'},
-                            {name: 'fechaEntrada', title: 'Entrada', sortField:'fechaEntrada'},
-                            {name: 'fechaSalida', title: 'Salida', sortField: 'fechaSalida'},
-                            {name: 'precioEntrada', title: 'Compra', sortField: 'precioEntrada'},
-                            {name: 'precioSalida', title: 'Venta', sortField: 'precioSalida'}
+                			{
+                				name: 'codbarras', 
+                				title: 'Código de barras', 
+                				sortField:'codbarras'
+                			},
+                            {
+                            	name: 'marca', 
+                            	title: 'Marca', 
+                            	sortField: 'marca'
+                            },
+                            {
+                            	name: 'modelo', 
+                            	title: 'Modelo', 
+                            	sortField: 'modelo'
+                            },
+                            {
+                            	name: 'serial', 
+                            	title: 'Serial', 
+                            	sortField: 'serial'
+                            },
+                            {
+                            	name: 'nombre', 
+                            	title:'Nombre', 
+                            	sortField: 'nombre'
+                            },
+                            {
+                            	name: 'fecha_entrada', 
+                            	title: 'Entrada', 
+                            	sortField:'fecha_entrada'
+                            },
+                            {
+                            	name: 'fecha_salida', 
+                            	title: 'Salida', 
+                            	sortField: 'fecha_salida'
+                            },
+                            {
+                            	name: 'precio_entrada', 
+                            	title: 'Compra', 
+                            	sortField: 'precio_entrada'
+                            },
+                            {
+                            	name: 'precio_salida', 
+                            	title: 'Venta', 
+                            	sortField: 'precio_salida'
+                            },
+							{
+					          	name: '__component:custom-actions-stock',   // <----
+					          	title: 'Actions',
+					          	titleClass: 'center aligned',
+					          	dataClass: 'center aligned'
+					        }
                         ],
             }
             return data;
@@ -293,10 +335,10 @@
                   'prods.modelo',
                   'stock.serial', 
                   'provs.nombre',
-                  //'stock.fechaEntrada',
-                  //'stock.fechaSalida',
-                  'stock.precioEntrada',
-                  'stock.precioSalida'     
+                  'stock.fecha_entrada',
+                  'stock.fecha_salida'
+                  //'stock.precioEntrada',
+                  //'stock.precioSalida'     
                 ],
                 'filter': this.searchText
               }

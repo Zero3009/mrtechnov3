@@ -9,7 +9,7 @@ class Stock extends Model
     protected $table = 'stock';
 	protected $primaryKey = 'id';
     //Definimos los campos que se pueden llenar con asignación masiva
-    protected $fillable = ['prods_id', 'provs_id','serial','precioEntrada','precioSalida','fechaEntrada','fechaSalida','disponible','estado'];
+    protected $fillable = ['prods_id', 'provs_id','serial','precio_entrada','precio_salida','fecha_entrada','fecha_salida','disponible','estado'];
     public $timestamps = false;
 
     public function setSerialAttribute($value)

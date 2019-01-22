@@ -46,9 +46,9 @@ class StockController extends Controller
                             $query->provs_id = $request[$i]['proveedor']['value'];
 
                             $query->serial = $request[$i]['seriales'][$h];
-                            $query->precioEntrada = $request[$i]['precioEntrada'];
+                            $query->precio_entrada = $request[$i]['precioEntrada'];
                             
-                            $query->fechaEntrada =$request[$i]['state'];
+                            $query->fecha_entrada =$request[$i]['state'];
                         
                         $query->save();
                     }
@@ -104,30 +104,30 @@ class StockController extends Controller
         $post = $request->all();
         if($request->input('fechaSalida') && $request->input('precioSalida')){
             Stock::find($post['id'])->update([
-                'fechaEntrada' => $post['fechaEntrada'],
-                'precioEntrada' => $post['precioEntrada'],
+                'fecha_entrada' => $post['fechaEntrada'],
+                'precio_entrada' => $post['precioEntrada'],
                 'serial' => $post['serial'],
                 'provs_id' => $post['proveedor'],
-                'fechaSalida' => $post['fechaSalida'],
-                'precioSalida' => $post['precioSalida'] 
+                'fecha_salida' => $post['fechaSalida'],
+                'precio_salida' => $post['precioSalida'] 
             ]);
         }else if($request->input('fechaSalida')){
             Stock::find($post['id'])->update([
-                'fechaEntrada' => $post['fechaEntrada'],
-                'precioEntrada' => $post['precioEntrada'],
+                'fecha_entrada' => $post['fechaEntrada'],
+                'precio_entrada' => $post['precioEntrada'],
                 'serial' => $post['serial'],
                 'provs_id' => $post['proveedor'],
-                'fechaSalida' => $post['fechaSalida'],
-                'precioSalida' => null
+                'fecha_salida' => $post['fechaSalida'],
+                'precio_salida' => null
             ]);
         }else{
             Stock::find($post['id'])->update([
-                'fechaEntrada' => $post['fechaEntrada'],
-                'precioEntrada' => $post['precioEntrada'],
+                'fecha_entrada' => $post['fechaEntrada'],
+                'precio_entrada' => $post['precioEntrada'],
                 'serial' => $post['serial'],
                 'provs_id' => $post['proveedor'],
-                'precioSalida' => null,
-                'fechaSalida' => null
+                'precio_salida' => null,
+                'fecha_salida' => null
             ]);
         }
         return Redirect::to('/admin/stock')->with('status', 'Se ha editado correctamente el registro.');
@@ -142,7 +142,12 @@ class StockController extends Controller
         $queryinfo = Stock::find($request['id']);
             $queryinfo->estado = false;
         $queryinfo->save();
-        return Redirect::to('/admin/stock')->with('status', 'Se ha eliminado correctamente el registro.');
+        return response()->json([
+                'status' => 'success',
+                'title'  => 'Resultado:',
+                'msg'    => 'Exito',
+                'type'   => 'success'
+            ],200);
     }
     public function SalidaStock(Request $request)
     {
@@ -152,12 +157,17 @@ class StockController extends Controller
 
         $queryinfo = Stock::find($request['id']);
             $queryinfo->disponible = false;
-            $queryinfo->fechaSalida = $request->fecha_out;
-            if($request->precioSalida){
-                $queryinfo->precioSalida = $request->precioSalida;
+            $queryinfo->fecha_salida = $request->fechaSalida;
+            if($request->precio_salida){
+                $queryinfo->precio_salida = $request->precioSalida;
             }
         $queryinfo->save();
-        return Redirect::to('/admin/stock')->with('status', 'Se ha completado correctamente la operación.');
+        return response()->json([
+                'status' => 'success',
+                'title'  => 'Resultado:',
+                'msg'    => 'Exito',
+                'type'   => 'success'
+            ],200);
 
     }
 }

@@ -23,10 +23,12 @@ import Vuex from 'vuex';
 import FilterBar from './components/FilterBar';
 import VueEvents from 'vue-events'
 import CustomActionsProductos from './components/tables/actions/CustomActionsProductos'
+import CustomActionsStock from './components/tables/actions/CustomActionsStock'
 import VueToastr from '@deveodk/vue-toastr'
 import '@deveodk/vue-toastr/dist/@deveodk/vue-toastr.css'
 
 Vue.component('custom-actions-productos', CustomActionsProductos)
+Vue.component('custom-actions-stock', CustomActionsStock)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

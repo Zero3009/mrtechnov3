@@ -28,7 +28,7 @@
           <input type="hidden" name="_token" :value="csrf">
           <div class="d-flex justify-content-end" style="margin-top: 10px">
             <button class="btn btn-secondary" type="button" @click="hideModal" style="margin-right: 5px">Cancelar</button>
-            <button class="btn btn-success" type="submit" @click="deleteItem">Aceptar</button>
+            <button class="btn btn-success" type="submit">Aceptar</button>
           </div>
         </form>
         
@@ -47,7 +47,7 @@
           <!--<input type="hidden" name="_token" :value="csrf">-->
           <div class="d-flex justify-content-end" style="margin-top: 10px">
             <button class="btn btn-secondary" type="button" @click="hideModal" style="margin-right: 5px">Cancelar</button>
-            <button class="btn btn-success" type="submit" @click="editItem">Aceptar</button>
+            <button class="btn btn-success" type="submit">Aceptar</button>
           </div>
         </form>
       </template>

@@ -31,7 +31,7 @@ class DatatablesController extends Controller
 	public function getStock()
 	{
 		//$ordenar = explode('|', $request->sort);
-		$retornar = Stock::select(['stock.id','prods.codbarras','prods.marca','prods.modelo','stock.serial','stock.fechaEntrada','stock.fechaSalida','stock.precioEntrada','stock.precioSalida','provs.nombre'])
+		$retornar = Stock::select(['stock.id','prods.codbarras','prods.marca','prods.modelo','stock.serial','stock.fecha_entrada','stock.fecha_salida','stock.precio_entrada','stock.precio_salida','provs.nombre'])
 							->join('prods','stock.prods_id','=','prods.id')
 							->join('provs','stock.provs_id','=','provs.id')
 							->where('stock.estado','=',true);
