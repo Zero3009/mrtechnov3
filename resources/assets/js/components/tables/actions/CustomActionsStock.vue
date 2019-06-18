@@ -33,7 +33,7 @@
           <b-list-group-item class="d-flex justify-content-between align-items-center">Fecha de entrada:
             <b-badge variant="primary" pill>{{data.fecha_entrada}}</b-badge>
           </b-list-group-item>
-          <b-list-group-item class="d-flex justify-content-between align-items-center">precioEntrada:
+          <b-list-group-item class="d-flex justify-content-between align-items-center">Precio de entrada:
             <b-badge variant="primary" pill>{{data.precio_entrada}}</b-badge>
           </b-list-group-item>
         </b-list-group>
@@ -45,18 +45,22 @@
             <button class="btn btn-success" type="submit">Aceptar</button>
           </div>
         </form>
-        
+      <!--EDIT-->
       </template>
       <template v-else-if="action == 'edit-item'">
         <form @submit.prevent="editItem" accept-charset="UTF-8" class="form-horizontal">
           <label for="select-codbarras">Código de barras:</label>
-          <input class="form-control" type="numeric" name="codbarras" v-model="data.codbarras">
-          <label for="select-serial">Marca:</label>
-          <input class="form-control" type="text" name="marca" v-model="data.marca">
-          <label for="select-prov">Tipo de producto:</label>
-          <input class="form-control" type="text" name="tipo" v-model="data.tipo">
-          <label for="modelo">Tipo de producto:</label>
-          <input class="form-control" type="text" name="modelo" v-model="data.modelo">
+          <v-select 
+            :options="options" 
+            v-model="codbarras" 
+            placeholder="Código de barras">  
+          </v-select>
+          <b-list-group-item class="d-flex justify-content-between align-items-center">Marca:
+            <b-badge variant="primary" pill>{{data.marca}}</b-badge>
+          </b-list-group-item>
+          <b-list-group-item class="d-flex justify-content-between align-items-center">Modelo:
+            <b-badge variant="primary" pill>{{data.modelo}}</b-badge>
+          </b-list-group-item>
           <input type="hidden" name="id" :value="data.id">
           <!--<input type="hidden" name="_token" :value="csrf">-->
           <div class="d-flex justify-content-end" style="margin-top: 10px">
@@ -65,6 +69,7 @@
           </div>
         </form>
       </template>
+      <!--FIN EDIT-->
       <template v-else-if="action == 'out-item'">
         <form @submit.prevent="outItem" accept-charset="UTF-8" class="form-horizontal">
           <b-list-group>
@@ -83,7 +88,7 @@
             <b-list-group-item class="d-flex justify-content-between align-items-center">Fecha de entrada:
               <b-badge variant="primary" pill>{{data.fecha_entrada}}</b-badge>
             </b-list-group-item>
-            <b-list-group-item class="d-flex justify-content-between align-items-center">precioEntrada:
+            <b-list-group-item class="d-flex justify-content-between align-items-center">Precio de entrada:
               <b-badge variant="primary" pill>{{data.precio_entrada}}</b-badge>
             </b-list-group-item>
           </b-list-group>
@@ -132,12 +137,15 @@
                 date: new Date()
             };
       var data = {
+        options:[],
+        codbarras: null,
         en: en,
         es: es,
         fechaSalida: state.date,
         precioSalida: 0,
         data: null,
         action: "",
+        url2: '/ajax/codbarras',
         csrf: $('meta[name=csrf-token]').attr('content')
       }
       return data;
@@ -184,8 +192,14 @@
       }
     },
     methods: {
+      codbarrasselect()
+      {
+        axios.get(this.url2)
+            .then(response => {
+                this.options = response.data;
+        });
+      },
       itemAction (action, data, index) {
-        console.log('custom-actions: ' + action, data.id, index)
         this.action = action;
         this.data = data;
         this.$refs.modal.show();
@@ -222,6 +236,11 @@
           });
       }
 
+
+    },
+    beforeMount()
+    {
+      this.codbarrasselect();
     }
   }
   </script>

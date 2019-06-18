@@ -167,12 +167,9 @@
                     for(var j = 0;j < this.rowsdynamic[i].seriales.length;j++)
                     {
                         for(var k = 0;k < this.seriales.length; k++){
-                            console.log(this.rowsdynamic[i].seriales[j])
-                            console.log(this.seriales[k])
 
                             if(this.rowsdynamic[i].seriales[j] == this.seriales[k])
                             {
-                                console.log('entro')
                                 testing[i].status = false
                                 testing[i].errores.push(this.rowsdynamic[i].seriales[j])
                                 break;

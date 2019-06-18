@@ -8,19 +8,18 @@
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('/css/fontawesome-all.css')}}">
     <link rel="stylesheet" href="{{asset('/css/template/bootadmin.css')}}">
-    <link rel="stylesheet" href="{{mix('css/semantic.css')}}">
 
-    <title>MR Techno</title>
+    <title>MGR Techno</title>
 </head>
 <body class="bg-light">
 
 <nav class="navbar navbar-expand navbar-dark bg-primary">
     <a class="sidebar-toggle mr-3" href="#"><i class="fa fa-bars"></i></a>
-    <a class="navbar-brand" href="#">MR Techno</a>
+    <a class="navbar-brand" href="#">MGR Techno</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-envelope"></i> 5</a></li>
+            <!--<li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-envelope"></i> 5</a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-bell"></i> 3</a></li>
             <li class="nav-item dropdown">
                 <a href="#" id="dd_user" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Doe</a>
@@ -28,7 +27,7 @@
                     <a href="#" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Logout</a>
                 </div>
-            </li>
+            </li>-->
         </ul>
     </div>
 </nav>
@@ -62,7 +61,6 @@
 
 <script src="{{mix('js/app.js')}}"></script>
 <script src="/js/bootadmin.js"></script>
-<script src="{{mix('/js/semantic.js')}}"></script>
 
 </body>
 </html>

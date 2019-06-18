@@ -12,6 +12,7 @@ import jquery from 'jquery';
 import popper from 'popper.js';
 import Vue from 'vue';
 import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 import Datepicker from 'vuejs-datepicker';
 import axios from 'axios';
 import vuetable from 'vuetable-2';

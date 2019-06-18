@@ -255,6 +255,7 @@
 			}*/
 			var data =
             {
+            	options: this.$parent.options,
                 data: null,
                 searchText: "",
                 css: CssConfig,
