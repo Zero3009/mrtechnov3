@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{asset('/css/fontawesome-all.css')}}">
     <link rel="stylesheet" href="{{asset('/css/template/bootadmin.css')}}">
 
+
     <title>MGR Techno</title>
 </head>
 <body class="bg-light">
